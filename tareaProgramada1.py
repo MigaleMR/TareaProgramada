@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 df = pd.read_excel("paises.xlsx", sheet_name=0)
 paises = df.to_numpy()
 infoPaises=[]
+#se tuvo que cambiar NA porque retornaban valores sin informacion (nan)
 for pais in paises:
     countryCode = pais[0]
     countryName = pais[1]
@@ -22,7 +23,6 @@ for pais in paises:
     capital = pais[6]
     continentName = pais[7]
     continentCode = pais[8]
-    #se tuvo que cambiar NA por NRA porque NA se considera como un valor nulo y retorna "nan"
     areaInSqKm = pais[9]
     languages = pais[10]
     isoAlpha3 = pais[11]
@@ -39,7 +39,7 @@ for paisData in infoPaises:
     codigo = ET.SubElement(pais, "codigo")
     codigo.text = paisData[1][0]
     fips = ET.SubElement(pais, "fips")
-    fips.text = paisData[1][1]
+    fips.text = str(paisData[1][1])
     iso = ET.SubElement(pais, "iso")
     iso.text = str(paisData[1][2])
     isoAlpha = ET.SubElement(pais, "isoAlpha")
