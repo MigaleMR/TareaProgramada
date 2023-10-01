@@ -8,9 +8,9 @@
 import pandas as pd
 import numpy as np
 import xml.etree.ElementTree as ET
-import lxml
+import sys
+sys.setrecursionlimit(5000)
 from lxml import etree
-	
 #informacion de la tabla de paises convertida a matriz
 df = pd.read_excel("paises.xlsx", sheet_name=0)
 paises = df.to_numpy()
@@ -64,13 +64,3 @@ for paisData in infoPaises:
     idiomas.text = paisData[7]
 tree = ET.ElementTree(root)
 tree.write("paises.xml")
-html = etree.Element('html')
-body = etree.SubElement(html, 'body')
-# Recorrer los elementos XML y generar HTML
-for element in root:
-    tag = etree.SubElement(body, element.tag)
-    tag.text = element.text if element.text else ""
-
-# Crear un objeto ElementTree y serializarlo como HTML
-html_tree = etree.ElementTree(html)
-html_tree.write('archivo.html', pretty_print=True, encoding='utf-8', method="html")
