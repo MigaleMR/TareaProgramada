@@ -8,6 +8,9 @@
 import pandas as pd
 import numpy as np
 import xml.etree.ElementTree as ET
+import sys
+sys.setrecursionlimit(5000)
+from lxml import etree
 #informacion de la tabla de paises convertida a matriz
 df = pd.read_excel("paises.xlsx", sheet_name=0)
 paises = df.to_numpy()
@@ -30,7 +33,6 @@ for pais in paises:
     infoPais=[countryName,[countryCode,fipsCode,isoNumeric,isoAlpha3,geonameId],currencyCode,population,capital,[continentName,continentCode],areaInSqKm,languages]
     infoPaises.append(infoPais)   
 #crear el archivo xml
-import xml.etree.ElementTree as ET
 root = ET.Element("paises")
 for paisData in infoPaises:
     pais = ET.SubElement(root, "pais")
