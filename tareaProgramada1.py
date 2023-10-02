@@ -81,53 +81,46 @@ infoPaises = crearPaisesLista(paises)
 # call the function to create the XML file
 listaPaises(infoPaises)
 
-def crear_tabla_paises_por_continente(infoPaises):
-    # Crear un diccionario para agrupar los países por continente
-    paises_por_continente = {}
-    for paisData in infoPaises:
-        continente = paisData[5][0]
-        if continente not in paises_por_continente:
-            paises_por_continente[continente] = []
-        paises_por_continente[continente].append(paisData)
+def generar_html_paises(info_paises):
+    # Crear el documento HTML
+    html = BeautifulSoup("<html><head><title>Información de Países</title></head><body></body></html>", "html.parser")
 
-    # Crear un objeto BeautifulSoup
-    html = BeautifulSoup("<html><body></body></html>", "html.parser")
+    # Agregar encabezado con estilo
+    encabezado = html.new_tag("h1", style="color: blue; text-align: center;")
+    encabezado.string = "Información de Países"
+    html.body.append(encabezado)
 
-    # Crear una tabla HTML
-    tabla = html.new_tag("table")
-
-    # Agregar encabezados de la tabla
-    encabezado = html.new_tag("tr")
-    encabezado.append(html.new_tag("th", text="Continente"))
-    encabezado.append(html.new_tag("th", text="Países"))
-    tabla.append(encabezado)
-
-    # Agregar filas para cada continente y sus países
-    for continente, paises in paises_por_continente.items():
-        fila_continente = html.new_tag("tr")
-        # Columna de Continente
-        fila_continente.append(html.new_tag("td", text=continente))
-        # Columna de Países
-        td_paises = html.new_tag("td")
-        for pais in paises:
-            paises_lista = pais[0].split("<br>")
-            for nombre_pais in paises_lista:
-                td_paises.append(nombre_pais)
-                td_paises.append(html.new_tag("br"))
-        fila_continente.append(td_paises)
-        tabla.append(fila_continente)
-
-    # Agregar la tabla al cuerpo del HTML
+    # Agregar tabla de países con estilo
+    tabla = html.new_tag("table", style="width: 100%; border-collapse: collapse;")
     html.body.append(tabla)
 
-    # Guardar el HTML en un archivo
-    with open("paises_por_continente.html", "w", encoding="utf-8") as file:
+    # Agregar encabezados de tabla con estilo
+    encabezados = html.new_tag("tr")
+    tabla.append(encabezados)
+    encabezados_tags = ["Nombre", "Código", "Territorio", "Población", "Capital"]
+    for encabezado_tag in encabezados_tags:
+        th = html.new_tag("th", style="background-color: lightgray; padding: 10px; text-align: left;")
+        th.string = encabezado_tag
+        encabezados.append(th)
+
+    # Contador para alternar colores de filas
+    fila_color = 0
+
+    # Agregar filas de datos de países con estilo alternado
+    for pais in info_paises:
+        fila = html.new_tag("tr", style=f"background-color: {'#CCE6FF' if fila_color % 2 == 0 else '#99C2FF'};")
+        fila_color += 1
+        tabla.append(fila)
+        nombre, codigos, poblacion, capital, area = pais[:5]
+        for dato in [nombre, codigos[0], poblacion, capital, area]:
+            td = html.new_tag("td", style="padding: 5px;")
+            td.string = str(dato)
+            fila.append(td)
+
+    # Guardar el archivo HTML
+    with open("informacion_paises.html", "w", encoding="utf-8") as file:
         file.write(str(html))
 
-infoPaises = crearPaisesLista(paises)
-
-# Crear el archivo XML
-listaPaises(infoPaises)
-
-# Crear la tabla HTML por continente
-crear_tabla_paises_por_continente(infoPaises)
+# Llama a la función para generar el HTML basado en la información de países
+infoPaises = crearPaisesLista(paises)  # Reemplaza datos_paises con tu lista de países
+generar_html_paises(infoPaises)
