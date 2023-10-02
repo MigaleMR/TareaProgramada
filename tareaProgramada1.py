@@ -112,7 +112,7 @@ def generar_html_paises(info_paises):
         fila_color += 1
         tabla.append(fila)
         nombre, codigos, poblacion, capital, area = pais[:5]
-        for dato in [nombre, codigos[0], poblacion, capital, area]:
+        for dato in [nombre, codigos[0], poblacion, capital, area[9]]:
             td = html.new_tag("td", style="padding: 5px;")
             td.string = str(dato)
             fila.append(td)
