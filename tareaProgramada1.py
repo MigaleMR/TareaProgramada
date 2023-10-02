@@ -187,6 +187,8 @@ poblacionMayorMenor(infoPaises)
 # Función para mostrar información de países ordenada por área en metros cuadrados sin sorted
 infoPaises = crearPaisesLista(paises)
 def territorioPaises(infoPaises):
+    """
+    """
     # Implementar ordenación personalizada por población de mayor a menor
     info_paises_ordenados = []
 
