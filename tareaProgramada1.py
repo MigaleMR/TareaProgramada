@@ -73,7 +73,7 @@ def listaPaises(infoPaises):
 infoPaises = crearPaisesLista(paises)
 listaPaises(infoPaises)
 
-#archivos html
+#a. Países por continentes.
 def htmlContinente(infoPaises):
     continenteElegido = input("Ingrese el nombre del continente del cual desea obtener información (Europe, North America, Asia, Antartica, Africa, Oceania ): ")##############CAMBIAR##############
     filtrarPaises = [pais for pais in infoPaises if pais[5][0] == continenteElegido]
@@ -106,8 +106,9 @@ def htmlContinente(infoPaises):
     with open(f"informacion_{continenteElegido}.html", "w", encoding="utf-8") as file:
         file.write(str(html))
 infoPaises = crearPaisesLista(paises)
-htmlContinente(infoPaises)
+#htmlContinente(infoPaises)
 
+#b. ¿Cuántos viven?
 def poblacionMayorMenor(infoPaises):
     poblacionMayorMenor= []
     while infoPaises:
@@ -142,9 +143,10 @@ def poblacionMayorMenor(infoPaises):
             fila.append(td)
     with open("informacion_por_poblacion.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-poblacionMayorMenor(infoPaises)
+#poblacionMayorMenor(infoPaises)
 infoPaises = crearPaisesLista(paises)
 
+#c. De grandes a pequeños.
 def territorioPaises(infoPaises):
     """
     """
@@ -181,9 +183,10 @@ def territorioPaises(infoPaises):
             fila.append(td)
     with open("informacion_metros_cuadrados.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-territorioPaises(infoPaises)
-
+#territorioPaises(infoPaises)
 infoPaises = crearPaisesLista(paises)
+
+#d. Zonas azules.
 def mostrar_paises_con_zonas_azules(infoPaises):
     paises_con_zonas_azules = ["Costa Rica", "Greece", "Italy", "Japan", "United States"]
     paises_azules = [pais for pais in infoPaises if pais[0] in paises_con_zonas_azules]
@@ -212,8 +215,9 @@ def mostrar_paises_con_zonas_azules(infoPaises):
             fila.append(td)
     with open("paises_azules.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-mostrar_paises_con_zonas_azules(infoPaises)
+#mostrar_paises_con_zonas_azules(infoPaises)
 
+#e. Países con el mismo idioma.
 def contar_paises_por_idioma(info_paises):
     """
     """
@@ -238,7 +242,6 @@ def contar_paises_por_idioma(info_paises):
                 paises_por_idioma[index].append(pais[0])
                 if pais[5][0] not in continentes_por_idioma[index]:
                     continentes_por_idioma[index].append(pais[5][0])
-    from bs4 import BeautifulSoup
     html = BeautifulSoup("<html><head><title>Cantidad de Países por Idioma</title></head><body></body></html>", "html.parser")
     encabezado = html.new_tag("h1", style="color: blue; text-align: center;")
     encabezado.string = "Cantidad de Países por Idioma"
@@ -275,8 +278,52 @@ def contar_paises_por_idioma(info_paises):
         fila.append(td_continentes)
     with open("cantidad_paises_por_idioma.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-contar_paises_por_idioma(infoPaises)
+#contar_paises_por_idioma(infoPaises)
 
+#f. Pago con la misma moneda.
+def mostrar_paises_por_moneda(infoPaises):
+    monedas = [pais[2] for pais in infoPaises if pais[2]]
+    monedas_unicas = list(set(monedas))
+    print("Monedas disponibles:")
+    for i, moneda in enumerate(monedas_unicas, start=1):
+        print(f"{i}. {moneda}")
+    seleccion = int(input("Seleccione una moneda (ingrese el número): ")) - 1
+    moneda_seleccionada = monedas_unicas[seleccion]
+    paises_con_moneda = [pais for pais in infoPaises if pais[2] == moneda_seleccionada]
+    html = BeautifulSoup("<html><head><title>Países por Moneda</title></head><body></body></html>", "html.parser")
+    encabezado = html.new_tag("h1", style="color: blue; text-align: center;")
+    encabezado.string = f"Países que utilizan la moneda {moneda_seleccionada}"
+    html.body.append(encabezado)
+    contador = 0
+    for pais in paises_con_moneda:
+        contador += 1
+    contador_html = html.new_tag("p")
+    contador_html.string = f"Cantidad de países que utilizan esta moneda: {contador}"
+    html.body.append(contador_html)
+    tabla = html.new_tag("table", style="width: 100%; border-collapse: collapse;")
+    html.body.append(tabla)
+    encabezados = html.new_tag("tr")
+    tabla.append(encabezados)
+    encabezados_tags = ["Nombre del país", "Código", "Población", "Capital", "Área"]
+    for encabezado_tag in encabezados_tags:
+        th = html.new_tag("th", style="background-color: lightgray; padding: 10px; text-align: left;")
+        th.string = encabezado_tag
+        encabezados.append(th)
+    paises_con_moneda.sort(key=lambda x: x[0])
+    for pais in paises_con_moneda:
+        fila = html.new_tag("tr")
+        tabla.append(fila)
+        nombre, codigos, poblacion, capital, area = pais[0], pais[1], pais[3], pais[4], pais[6]
+        for dato in [nombre, codigos[0], poblacion, capital, area]:
+            td = html.new_tag("td", style="padding: 5px;")
+            td.string = str(dato)
+            fila.append(td)
+    with open(f"paises_{moneda_seleccionada}.html", "w", encoding="utf-8") as file:
+        file.write(str(html))
+    print(f"Archivo HTML creado con los países que utilizan la moneda {moneda_seleccionada} y el contador de países.")
+#mostrar_paises_por_moneda(infoPaises)
+
+#g. Códigos de un determinado país.
 def mostrar_informacion_por_continente_y_pais(infoPaises):
     """
     """
@@ -308,6 +355,7 @@ def mostrar_informacion_por_continente_y_pais(infoPaises):
     print("Archivo HTML creado con los detalles del país seleccionado.")
 mostrar_informacion_por_continente_y_pais(infoPaises)
 
+#h. Hablantes por idioma
 def calcular_hablantes_por_idioma(infoPaises):
     idiomas_unicos = []
     hablantes_por_idioma = []
@@ -348,4 +396,4 @@ def calcular_hablantes_por_idioma(infoPaises):
     with open("hablantes_por_idioma.html", "w", encoding="utf-8") as file:
         file.write(str(html))
     print("Archivo HTML creado con los hablantes por idioma.")
-calcular_hablantes_por_idioma(infoPaises)
+#calcular_hablantes_por_idioma(infoPaises)
