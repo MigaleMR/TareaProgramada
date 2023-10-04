@@ -1,4 +1,4 @@
-#####################################################################
+####################################################################
 #Elaborado por: Alejandro Madrigal y Daniel Campos
 #Fecha de creación: 21-09-2023 Hora: 10:00pm
 #Fecha de finalización:
@@ -12,9 +12,7 @@ import sys
 sys.setrecursionlimit(5000)
 from lxml import etree
 from bs4 import BeautifulSoup
-#informacion de la tabla de paises convertida a matriz
-df = pd.read_excel("paises.xlsx", sheet_name=0)
-paises = df.to_numpy()
+import os
 # se tuvo que cambiar NA porque retornaban valores sin informacion (nan)
 def crearPaisesLista(paises):
     infoPaises=[]
@@ -36,42 +34,42 @@ def crearPaisesLista(paises):
         infoPaises.append(infoPais)
     return infoPaises
 # crear el archivo xml
-root = ET.Element("paises")
+    
 def listaPaises(infoPaises):
-    """
-    """
+    root = ET.Element("paises")
     for paisData in infoPaises:
         pais = ET.SubElement(root, "pais")
         nombre = ET.SubElement(pais, "nombre")
         nombre.text = paisData[0]
         codigo = ET.SubElement(pais, "codigo")
-        codigo.text = paisData[1][0]
+        codigo.text = paisData[1][0] if paisData[1][0] else ""
         fips = ET.SubElement(pais, "fips")
-        fips.text = str(paisData[1][1])
+        fips.text = str(paisData[1][1]) if paisData[1][1] else ""
         iso = ET.SubElement(pais, "iso")
-        iso.text = str(paisData[1][2])
+        iso.text = str(paisData[1][2]) if paisData[1][2] else ""
         isoAlpha = ET.SubElement(pais, "isoAlpha")
-        isoAlpha.text = paisData[1][3]
+        isoAlpha.text = paisData[1][3] if paisData[1][3] else ""
         geoname = ET.SubElement(pais, "geoname")
-        geoname.text = str(paisData[1][4])
+        geoname.text = str(paisData[1][4]) if paisData[1][4] else ""
         moneda = ET.SubElement(pais, "moneda")
-        moneda.text = paisData[2]
+        moneda.text = paisData[2] if paisData[2] else ""
         poblacion = ET.SubElement(pais, "poblacion")
-        poblacion.text = str(paisData[3])
+        poblacion.text = str(paisData[3]) if paisData[3] else ""
         capital = ET.SubElement(pais, "capital")
-        capital.text = paisData[4]
+        capital.text = paisData[4] if paisData[4] else ""
         continente = ET.SubElement(pais, "continente")
-        continente.text = paisData[5][0]
+        continente.text = paisData[5][0] if paisData[5][0] else ""
         continenteCodigo = ET.SubElement(pais, "continenteCodigo")
-        continenteCodigo.text = paisData[5][1]
+        continenteCodigo.text = paisData[5][1] if paisData[5][1] else ""
         area = ET.SubElement(pais, "area")
-        area.text = str(paisData[6])
+        area.text = str(paisData[6]) if paisData[6] else ""
         idiomas = ET.SubElement(pais, "idiomas")
-        idiomas.text = paisData[7]
+        idiomas.text = paisData[7] if paisData[7] else ""
         tree = ET.ElementTree(root)
         tree.write("paises.xml", encoding="utf-8", xml_declaration=True)
-infoPaises = crearPaisesLista(paises)
-listaPaises(infoPaises)
+    
+     
+
 
 #a. Países por continentes.
 def htmlContinente(infoPaises):
@@ -105,8 +103,6 @@ def htmlContinente(infoPaises):
             fila.append(td)
     with open(f"informacion_{continenteElegido}.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-infoPaises = crearPaisesLista(paises)
-#htmlContinente(infoPaises)
 
 #b. ¿Cuántos viven?
 def poblacionMayorMenor(infoPaises):
@@ -143,21 +139,19 @@ def poblacionMayorMenor(infoPaises):
             fila.append(td)
     with open("informacion_por_poblacion.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-#poblacionMayorMenor(infoPaises)
-infoPaises = crearPaisesLista(paises)
 
 #c. De grandes a pequeños.
 def territorioPaises(infoPaises):
     """
     """
-    info_paises_ordenados = []
+    paisesOrdenados= []
     while infoPaises:
-        max_pais = infoPaises[0]
+        paisMayor = infoPaises[0]
         for pais in infoPaises:
-            if pais[6] > max_pais[6]:
-                max_pais = pais
-        info_paises_ordenados.append(max_pais)
-        infoPaises.remove(max_pais)
+            if pais[6] > paisMayor[6]:
+                paisMayor = pais
+        paisesOrdenados.append(paisMayor)
+        infoPaises.remove(paisMayor)
     html = BeautifulSoup("<html><head><title>Información de países por territorio</title></head><body></body></html>", "html.parser")
     encabezado = html.new_tag("h1", style="color: blue; text-align: center;")
     encabezado.string = "Información de Países por Población"
@@ -183,8 +177,6 @@ def territorioPaises(infoPaises):
             fila.append(td)
     with open("informacion_metros_cuadrados.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-#territorioPaises(infoPaises)
-infoPaises = crearPaisesLista(paises)
 
 #d. Zonas azules.
 def mostrar_paises_con_zonas_azules(infoPaises):
@@ -215,7 +207,6 @@ def mostrar_paises_con_zonas_azules(infoPaises):
             fila.append(td)
     with open("paises_azules.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-#mostrar_paises_con_zonas_azules(infoPaises)
 
 #e. Países con el mismo idioma.
 def contar_paises_por_idioma(info_paises):
@@ -278,7 +269,6 @@ def contar_paises_por_idioma(info_paises):
         fila.append(td_continentes)
     with open("cantidad_paises_por_idioma.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-#contar_paises_por_idioma(infoPaises)
 
 #f. Pago con la misma moneda.
 def mostrar_paises_por_moneda(infoPaises):
@@ -323,7 +313,6 @@ def mostrar_paises_por_moneda(infoPaises):
     with open(f"paises_{moneda_seleccionada}.html", "w", encoding="utf-8") as file:
         file.write(str(html))
     print(f"Archivo HTML creado con los países que utilizan la moneda {moneda_seleccionada} y el contador de países.")
-mostrar_paises_por_moneda(infoPaises)
 
 #g. Códigos de un determinado país.
 def mostrar_informacion_por_continente_y_pais(infoPaises):
@@ -357,7 +346,6 @@ def mostrar_informacion_por_continente_y_pais(infoPaises):
     with open("detalles_pais.html", "w", encoding="utf-8") as file:
         file.write(str(html))
     print("Archivo HTML creado con los detalles del país seleccionado.")
-mostrar_informacion_por_continente_y_pais(infoPaises)
 
 #h. Hablantes por idioma
 def calcular_hablantes_por_idioma(infoPaises):
@@ -402,4 +390,3 @@ def calcular_hablantes_por_idioma(infoPaises):
     with open("hablantes_por_idioma.html", "w", encoding="utf-8") as file:
         file.write(str(html))
     print("Archivo HTML creado con los hablantes por idioma.")
-calcular_hablantes_por_idioma(infoPaises)
