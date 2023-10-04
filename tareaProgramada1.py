@@ -1,7 +1,7 @@
 ####################################################################
 #Elaborado por: Alejandro Madrigal y Daniel Campos
-#Fecha de creación: 21-09-2023 Hora: 10:00pm
-#Fecha de finalización:
+#Fecha de creación: 19-09-2023 Hora: 8:00pm
+#Fecha de finalización: 
 #Versión: 3.11.5
 ####################################################################
 #importacion de librerias
@@ -12,7 +12,8 @@ from lxml import etree
 from bs4 import BeautifulSoup
 import sys
 sys.setrecursionlimit(5000)
-# se tuvo que cambiar NA porque retornaban valores sin informacion (nan)
+# Se tuvo que cambiar el codigo de norteamerica (NA) por NRA, el código NA generaba un valor nulo en el archivo xml.
+# En los elementos donde no había información se le asignó un string llamado "No tiene" ya que generaba un valor nulo en el xml.
 df = pd.read_excel("paises.xlsx", sheet_name=0)
 paises = df.to_numpy()
 def crearPaisesLista(paises):
@@ -40,7 +41,7 @@ def crearPaisesLista(paises):
         infoPaises.append(infoPais)
     return infoPaises   
 
-# crear el archivo xml
+# Crear el archivo xml
 infoPaises = crearPaisesLista(paises) 
 def listaPaises(infoPaises):
     """
