@@ -310,8 +310,10 @@ def mostrar_paises_por_moneda(infoPaises):
         th.string = encabezado_tag
         encabezados.append(th)
     paises_con_moneda.sort(key=lambda x: x[0])
+    fila_color = 0
     for pais in paises_con_moneda:
-        fila = html.new_tag("tr")
+        fila = html.new_tag("tr", style=f"background-color: {'#CCE6FF' if fila_color % 2 == 0 else '#99C2FF'};")
+        fila_color += 1
         tabla.append(fila)
         nombre, codigos, poblacion, capital, area = pais[0], pais[1], pais[3], pais[4], pais[6]
         for dato in [nombre, codigos[0], poblacion, capital, area]:
@@ -321,7 +323,7 @@ def mostrar_paises_por_moneda(infoPaises):
     with open(f"paises_{moneda_seleccionada}.html", "w", encoding="utf-8") as file:
         file.write(str(html))
     print(f"Archivo HTML creado con los países que utilizan la moneda {moneda_seleccionada} y el contador de países.")
-#mostrar_paises_por_moneda(infoPaises)
+mostrar_paises_por_moneda(infoPaises)
 
 #g. Códigos de un determinado país.
 def mostrar_informacion_por_continente_y_pais(infoPaises):
@@ -346,8 +348,10 @@ def mostrar_informacion_por_continente_y_pais(infoPaises):
     detalles_lista = html.new_tag("ul")
     html.body.append(detalles_lista)
     detalles = ["Nombre del continente: " + str(pais_seleccionado[5][0]),"Nombre del país: " + str(pais_seleccionado[0]),"countryCode: " + str(pais_seleccionado[1][0]),"fipsCode: " + str(pais_seleccionado[1][1]),"isoNumeric: " + str(pais_seleccionado[1][2]),"isoAlpha3: " + str(pais_seleccionado[1][3]),"geonameId: " + str(pais_seleccionado[1][4])]
+    fila_color = 0  
     for detalle in detalles:
-        detalle_tag = html.new_tag("li")
+        detalle_tag = html.new_tag("li", style=f"background-color: {'#CCE6FF' if fila_color % 2 == 0 else '#99C2FF'};")
+        fila_color += 1
         detalle_tag.string = detalle
         detalles_lista.append(detalle_tag)
     with open("detalles_pais.html", "w", encoding="utf-8") as file:
@@ -384,8 +388,10 @@ def calcular_hablantes_por_idioma(infoPaises):
         th = html.new_tag("th", style="background-color: lightgray; padding: 10px; text-align: left;")
         th.string = encabezado_tag
         encabezados.append(th)
+    fila_color = 0
     for idioma, hablantes in zip(idiomas_unicos, hablantes_por_idioma):
-        fila = html.new_tag("tr")
+        fila = html.new_tag("tr", style=f"background-color: {'#CCE6FF' if fila_color % 2 == 0 else '#99C2FF'};")
+        fila_color += 1
         tabla.append(fila)
         td_idioma = html.new_tag("td", style="padding: 5px;")
         td_idioma.string = idioma
@@ -396,4 +402,4 @@ def calcular_hablantes_por_idioma(infoPaises):
     with open("hablantes_por_idioma.html", "w", encoding="utf-8") as file:
         file.write(str(html))
     print("Archivo HTML creado con los hablantes por idioma.")
-#calcular_hablantes_por_idioma(infoPaises)
+calcular_hablantes_por_idioma(infoPaises)
