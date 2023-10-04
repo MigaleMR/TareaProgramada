@@ -9,24 +9,30 @@ from tareaProgramada1 import *
 import pandas as pd
 import numpy as np
 import xml.etree.ElementTree as ET
-import sys
-sys.setrecursionlimit(5000)
 from lxml import etree
 from bs4 import BeautifulSoup
 import requests as req
 import os
 import re
+import sys
+sys.setrecursionlimit(5000)
 
 def opcionCrearEstructura():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
-    df = pd.read_excel("D:\Estudios de Ale\Compu\GitHub\Tareas Programadas\TareaProgramada/paises.xlsx", sheet_name=0)
+    df = pd.read_excel("paises.xlsx", sheet_name=0)
     paises = df.to_numpy()
     crearPaisesLista(paises)
     return menu()
 
 def opcionListaPaisesXlm():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises) 
     listaPaises(infoPaises)
@@ -34,15 +40,16 @@ def opcionListaPaisesXlm():
 
 def opcionHTML():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     return menuHTML()
 def menu():
     """
-    Funcionamiento: de manera repetitiva, muestra el menú al usuario. 
-    Entradas:
-        -opcion(int): dígito que se le solicita al usuario para indicar
-        la prueba que desea realizar.
-    Salidas:resultado según lo solicitado
+    Función: de manera repetitiva, muestra el menú al usuario. 
+    Entradas: dígito que se le solicita al usuario para indicar la prueba que desea realizar.
+    Salidas: resultado según lo solicitado
     """
     print ("\n**************************\n")
     print ("Laboratorio de listas")
@@ -64,9 +71,9 @@ def menu():
             elif opcion == 3:
                 return opcionHTML() 
             elif opcion == 0:
-                print("Salida del programa")
+                print("Gracias por usar nuestro programa, ¡Vuelva pronto!")
             else:
-                print ("Opción inválida, digita una de las opciones")
+                print ("Opción inválida, digite una de las opciones")
                 return menu()
     except ValueError:
         print("Opción inválida, debe ingresar sólo los números de las opciones.")
@@ -75,6 +82,9 @@ def menu():
 #1. Listar países por continente
 def opcionHtmlContinente():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises)
     htmlContinente(infoPaises)
@@ -82,6 +92,9 @@ def opcionHtmlContinente():
 #2. Listar países por población mayor a menor
 def opcionPoblacionMayorMenorHTML():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises)
     poblacionMayorMenor(infoPaises)
@@ -89,6 +102,9 @@ def opcionPoblacionMayorMenorHTML():
 #3. Listar países por mayor o menor territorio
 def opcionTerritorioPaisesHTML():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises)
     territorioPaisesHTML(infoPaises)
@@ -96,6 +112,9 @@ def opcionTerritorioPaisesHTML():
 #4. Listar países con zonas azules
 def opcionmostrarZonasAzulesHTML():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises)
     mostrarZonasAzulesHTML(infoPaises)
@@ -103,6 +122,9 @@ def opcionmostrarZonasAzulesHTML():
 #5. Listar idiomas
 def opcioncontarIdiomasHTML():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises)
     contarIdiomasHTML(infoPaises)
@@ -110,6 +132,9 @@ def opcioncontarIdiomasHTML():
 #6. Listar países por moneda
 def opcionmostrarPaisesMonedaHTML():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises)
     mostrarPaisesMonedaHTML(infoPaises)
@@ -117,6 +142,9 @@ def opcionmostrarPaisesMonedaHTML():
 #7 Calcular población por idioma
 def opicioncalcularHablantesXPaisHTML():
     """
+    Función: 
+    Entradas:
+    Salidas:
     """
     infoPaises = crearPaisesLista(paises)
     calcularHablantesXPaisHTML(infoPaises)
@@ -125,9 +153,7 @@ def opicioncalcularHablantesXPaisHTML():
 def menuHTML():
     """
     Funcionamiento: de manera repetitiva, muestra el menú al usuario. 
-    Entradas:
-        -opcion(int): dígito que se le solicita al usuario para indicar
-        la prueba que desea realizar.
+    Entradas: dígito que se le solicita al usuario para indicar la prueba que desea realizar.
     Salidas:resultado según lo solicitado
     """
     print ("\n**************************\n")
