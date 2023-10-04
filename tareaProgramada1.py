@@ -14,6 +14,8 @@ from lxml import etree
 from bs4 import BeautifulSoup
 import os
 # se tuvo que cambiar NA porque retornaban valores sin informacion (nan)
+df = pd.read_excel("D:\Estudios de Ale\Compu\GitHub\Tareas Programadas\TareaProgramada/paises.xlsx", sheet_name=0)
+paises = df.to_numpy()
 def crearPaisesLista(paises):
     infoPaises=[]
     for pais in paises:
@@ -32,11 +34,12 @@ def crearPaisesLista(paises):
         geonameId = pais[12] if len(pais) > 12 else None
         infoPais=[countryName,[countryCode,fipsCode,isoNumeric,isoAlpha3,geonameId],currencyCode,population,capital,[continentName,continentCode],areaInSqKm,languages]
         infoPaises.append(infoPais)
-    return infoPaises
+    return infoPaises   
 # crear el archivo xml
-    
+infoPaises = crearPaisesLista(paises) 
 def listaPaises(infoPaises):
     root = ET.Element("paises")
+    tree = ET.ElementTree(root)
     for paisData in infoPaises:
         pais = ET.SubElement(root, "pais")
         nombre = ET.SubElement(pais, "nombre")
@@ -65,15 +68,14 @@ def listaPaises(infoPaises):
         area.text = str(paisData[6]) if paisData[6] else ""
         idiomas = ET.SubElement(pais, "idiomas")
         idiomas.text = paisData[7] if paisData[7] else ""
-        tree = ET.ElementTree(root)
-        tree.write("paises.xml", encoding="utf-8", xml_declaration=True)
-    
+    tree.write("paises.xml", encoding="utf-8", xml_declaration=True)
+
      
 
 
 #a. Países por continentes.
 def htmlContinente(infoPaises):
-    continenteElegido = input("Ingrese el nombre del continente del cual desea obtener información (Europe, North America, Asia, Antartica, Africa, Oceania ): ")##############CAMBIAR##############
+    continenteElegido = input("Ingrese el nombre del continente del cual desea obtener información (Europe, North America, Asia, Antartica, Africa, Oceania, South America ): ")##############CAMBIAR##############
     filtrarPaises = [pais for pais in infoPaises if pais[5][0] == continenteElegido]
     if not filtrarPaises:
         print(f"No se encontraron países en el continente {continenteElegido}.")
@@ -141,7 +143,7 @@ def poblacionMayorMenor(infoPaises):
         file.write(str(html))
 
 #c. De grandes a pequeños.
-def territorioPaises(infoPaises):
+def territorioPaisesHTML(infoPaises):
     """
     """
     paisesOrdenados= []
@@ -179,9 +181,9 @@ def territorioPaises(infoPaises):
         file.write(str(html))
 
 #d. Zonas azules.
-def mostrar_paises_con_zonas_azules(infoPaises):
-    paises_con_zonas_azules = ["Costa Rica", "Greece", "Italy", "Japan", "United States"]
-    paises_azules = [pais for pais in infoPaises if pais[0] in paises_con_zonas_azules]
+def mostrarZonasAzulesHTML(infoPaises):
+    paisesZonasAzules= ["Costa Rica", "Greece", "Italy", "Japan", "United States"]
+    paisesAzules = [pais for pais in infoPaises if pais[0] in paisesZonasAzules]
     html = BeautifulSoup("<html><head><title>Países con zonas azules</title></head><body></body></html>", "html.parser")
     encabezado = html.new_tag("h1", style="color: blue; text-align: center;")
     encabezado.string = "Información de Países por Población"
@@ -196,7 +198,7 @@ def mostrar_paises_con_zonas_azules(infoPaises):
         th.string = encabezado_tag
         encabezados.append(th)
     fila_color=0
-    for pais in paises_azules:
+    for pais in paisesAzules:
         fila = html.new_tag("tr", style=f"background-color: {'#CCE6FF' if fila_color % 2 == 0 else '#99C2FF'};")
         fila_color += 1
         tabla.append(fila)
@@ -209,30 +211,30 @@ def mostrar_paises_con_zonas_azules(infoPaises):
         file.write(str(html))
 
 #e. Países con el mismo idioma.
-def contar_paises_por_idioma(info_paises):
+def contarIdiomasHTML(infoPaises):
     """
     """
-    idiomas_unicos = []
-    cantidad_paises = []
-    paises_por_idioma = []
-    continentes_por_idioma = []
-    def obtener_idioma_principal(codigo_idioma):
-        return codigo_idioma.split("-")[0]
-    for pais in info_paises:
+    idiomasUnicos = []
+    cantidadPaises = []
+    paisesIdioma = []
+    idiomasContinente = []
+    def idiomaPrincipal(codigoIdioma):
+        return codigoIdioma.split("-")[0]
+    for pais in infoPaises:
         idiomas = pais[7].split(",")
         for idioma in idiomas:
-            idioma = obtener_idioma_principal(idioma.strip())
-            if idioma not in idiomas_unicos:
-                idiomas_unicos.append(idioma)
-                cantidad_paises.append(1)
-                paises_por_idioma.append([pais[0]])
-                continentes_por_idioma.append([pais[5][0]])
+            idioma = idiomaPrincipal(idioma.strip())
+            if idioma not in idiomasUnicos:
+                idiomasUnicos.append(idioma)
+                cantidadPaises.append(1)
+                paisesIdioma.append([pais[0]])
+                idiomasContinente.append([pais[5][0]])
             else:
-                index = idiomas_unicos.index(idioma)
-                cantidad_paises[index] += 1
-                paises_por_idioma[index].append(pais[0])
-                if pais[5][0] not in continentes_por_idioma[index]:
-                    continentes_por_idioma[index].append(pais[5][0])
+                index = idiomasUnicos.index(idioma)
+                cantidadPaises[index] += 1
+                paisesIdioma[index].append(pais[0])
+                if pais[5][0] not in idiomasContinente[index]:
+                    idiomasContinente[index].append(pais[5][0])
     html = BeautifulSoup("<html><head><title>Cantidad de Países por Idioma</title></head><body></body></html>", "html.parser")
     encabezado = html.new_tag("h1", style="color: blue; text-align: center;")
     encabezado.string = "Cantidad de Países por Idioma"
@@ -246,24 +248,24 @@ def contar_paises_por_idioma(info_paises):
         th = html.new_tag("th", style="background-color: lightgray; padding: 10px; text-align: left;")
         th.string = encabezado_tag
         encabezados.append(th)
-    fila_color = 0
-    for i in range(len(idiomas_unicos)):
-        fila = html.new_tag("tr", style=f"background-color: {'#CCE6FF' if fila_color % 2 == 0 else '#99C2FF'};")
-        fila_color += 1
+    color = 0
+    for i in range(len(idiomasUnicos)):
+        fila = html.new_tag("tr", style=f"background-color: {'#CCE6FF' if color % 2 == 0 else '#99C2FF'};")
+        coloor += 1
         tabla.append(fila)
-        idioma = idiomas_unicos[i]
-        cantidad = cantidad_paises[i]
+        idioma = idiomasUnicos[i]
+        cantidad = cantidadPaises[i]
         td_idioma = html.new_tag("td", style="padding: 5px;")
         td_idioma.string = idioma
         fila.append(td_idioma)
         td_cantidad = html.new_tag("td", style="padding: 5px;")
         td_cantidad.string = str(cantidad)
         fila.append(td_cantidad)
-        paises = paises_por_idioma[i]
+        paises = paisesIdioma[i]
         td_paises = html.new_tag("td", style="padding: 5px;")
         td_paises.string = ", ".join(paises)
         fila.append(td_paises)
-        continentes = continentes_por_idioma[i]
+        continentes = idiomasContinente[i]
         td_continentes = html.new_tag("td", style="padding: 5px;")
         td_continentes.string = ", ".join(continentes)
         fila.append(td_continentes)
@@ -271,7 +273,7 @@ def contar_paises_por_idioma(info_paises):
         file.write(str(html))
 
 #f. Pago con la misma moneda.
-def mostrar_paises_por_moneda(infoPaises):
+def mostrarPaisesMonedaHTML(infoPaises):
     monedas = [pais[2] for pais in infoPaises if pais[2]]
     monedas_unicas = list(set(monedas))
     print("Monedas disponibles:")
@@ -315,7 +317,7 @@ def mostrar_paises_por_moneda(infoPaises):
     print(f"Archivo HTML creado con los países que utilizan la moneda {moneda_seleccionada} y el contador de países.")
 
 #g. Códigos de un determinado país.
-def mostrar_informacion_por_continente_y_pais(infoPaises):
+def informacionPaisyContinenteHTML(infoPaises):
     """
     """
     continentes_unicos = list(set([pais[5][0] for pais in infoPaises]))
@@ -348,7 +350,7 @@ def mostrar_informacion_por_continente_y_pais(infoPaises):
     print("Archivo HTML creado con los detalles del país seleccionado.")
 
 #h. Hablantes por idioma
-def calcular_hablantes_por_idioma(infoPaises):
+def calcularHablantesXPaisHTML(infoPaises):
     idiomas_unicos = []
     hablantes_por_idioma = []
     for pais in infoPaises:
