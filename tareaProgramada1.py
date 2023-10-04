@@ -10,7 +10,6 @@ import numpy as np
 import xml.etree.ElementTree as ET
 from lxml import etree
 from bs4 import BeautifulSoup
-import os
 import sys
 sys.setrecursionlimit(5000)
 # se tuvo que cambiar NA porque retornaban valores sin informacion (nan)

@@ -12,8 +12,6 @@ import xml.etree.ElementTree as ET
 from lxml import etree
 from bs4 import BeautifulSoup
 import requests as req
-import os
-import re
 import sys
 sys.setrecursionlimit(5000)
 
