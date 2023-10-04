@@ -351,7 +351,7 @@ def mostrarPaisesMonedaHTML(infoPaises):
     print("Archivo HTML creado con los países que utilizan la moneda",seleccionMoneda,"y el contador de países.")
 
 #g. Códigos de un determinado país.
-def informacionPaisyContinenteHTML(infoPaises):
+def cogidosPaisHTML(infoPaises):
     """
     Función: 
     Entradas:

@@ -129,7 +129,7 @@ def opcioncontarIdiomasHTML():
     infoPaises = crearPaisesLista(paises)
     contarIdiomasHTML(infoPaises)
     return menuHTML()
-#6. Listar países por moneda
+#6. Listar países por moneda.
 def opcionmostrarPaisesMonedaHTML():
     """
     Función: 
@@ -139,7 +139,16 @@ def opcionmostrarPaisesMonedaHTML():
     infoPaises = crearPaisesLista(paises)
     mostrarPaisesMonedaHTML(infoPaises)
     return menuHTML()
-#7 Calcular población por idioma
+#7. Códigos de un país.
+def opcioncogidosPaisHTML():
+    """
+    Función: 
+    Entradas:
+    Salidas:
+    """
+    infoPaises = crearPaisesLista(paises)
+    cogidosPaisHTML(infoPaises)
+#8. Calcular población por idioma
 def opicioncalcularHablantesXPaisHTML():
     """
     Función: 
@@ -166,7 +175,8 @@ def menuHTML():
     print ("4. HTML de países con zonas azules")
     print ("5. HTML de idiomas")
     print ("6. HTML de países por moneda")
-    print ("7. HTML de población por idioma")
+    print ("7. HTML de códigos de un país")
+    print ("8. HTML de población por idioma")
     print ("0. Salir del sistema")
     print ("\n**************************\n")
     try:
@@ -186,6 +196,8 @@ def menuHTML():
             elif opcion == 6:
                 return opcionmostrarPaisesMonedaHTML()
             elif opcion == 7:
+                return opcioncogidosPaisHTML()
+            elif opcion == 8:
                 return opicioncalcularHablantesXPaisHTML()
             elif opcion == 0:
                 print("Gracias por donar su sangre, ahora fuiste tú, luego espero poder ser yo.")
