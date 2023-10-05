@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 import requests as req
 import sys
 sys.setrecursionlimit(5000)
+#Opción de crear estructura de datos
 def opcionCrearEstructura():
     """
     Función: Crea la estructura de datos de los países. 
@@ -24,6 +25,7 @@ def opcionCrearEstructura():
     paises = df.to_numpy()
     crearPaisesLista(paises)
     return menu()
+#Opción de crear XML de los países
 def opcionListaPaisesXML():
     """
     Función: Crea el XML de los países.
@@ -33,6 +35,7 @@ def opcionListaPaisesXML():
     infoPaises = crearPaisesLista(paises) 
     listaPaises(infoPaises)
     return menu()
+#Opcion de menú de HTML
 def opcionHTML():
     """
     Función: Muestra el menú de HTML.
@@ -40,6 +43,7 @@ def opcionHTML():
     Salidas: Resultado según lo solicitado.
     """
     return menuHTML()
+#Menú principal
 def menu():
     """
     Función: Muestra el menú al usuario. 
