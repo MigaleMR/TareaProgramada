@@ -1,7 +1,7 @@
 ####################################################################
 #Elaborado por: Alejandro Madrigal y Daniel Campos
-#Fecha de creación: 01-10-2023 Hora: 1:00pm
-#Fecha de finalización: 
+#Fecha de creación: 03-10-2023 Hora: 1:00pm
+#Fecha de finalización: 04-10-2023 Hora: 11:00pm
 #Versión: 3.11.5
 ####################################################################
 #Importación de librerias
@@ -14,7 +14,6 @@ from bs4 import BeautifulSoup
 import requests as req
 import sys
 sys.setrecursionlimit(5000)
-
 def opcionCrearEstructura():
     """
     Función: Crea la estructura de datos de los países. 
@@ -50,11 +49,14 @@ def menu():
     print ("\n**************************\n")
     print ("Tarea programada 1")
     print ("Menú Principal")
-    print("\n Debe crear primero la lista con la opción 1. \n Luego acceder a la opción 2.\n Luego acceder a la opción 3 para redirigirse a las sección de HTML.")
+    print("\n**************************\n")
+    print("Instrucciones:")
+    print("\nDebe crear primero la lista con la opción 1. \nLuego acceder a la opción 2.\nLuego acceder a la opción 3 para redirigirse a las sección de HTML.")
     print ("\n**************************\n")
     print ("1. Crear lista de países")
-    print ("2. Crear XML de países")
+    print ("2. Crear XML de países (Te aparecerá una pestaña para abrir el XML, con tu navegador de preferencia)")
     print ("3. Crear HTMLs de países")
+    print ("0. Salir del programa")
     print ("\n**************************\n")
     try:
         opcion = int(input("Escoja una opción: "))
@@ -69,7 +71,8 @@ def menu():
             elif opcion == 3:
                 return opcionHTML() 
             elif opcion == 0:
-                print("Gracias por usar nuestro programa, ¡Vuelva pronto!")
+                print("Gracias por usar nuestro programa. \n¡Esperamos que te haya servido la información que te brindamos!\n¡Vuelva pronto!")
+                return ""
             else:
                 print ("Opción inválida, digite una de las opciones")
                 return menu()
@@ -145,7 +148,8 @@ def opcioncogidosPaisHTML():
     Salidas: HTML de los códigos de un país.
     """
     infoPaises = crearPaisesLista(paises)
-    cogidosPaisHTML(infoPaises)
+    codigosPaisHTML(infoPaises)
+    return menuHTML()
 #8. Calcular población por idioma
 def opicioncalcularHablantesPaisHTML():
     """
@@ -154,7 +158,7 @@ def opicioncalcularHablantesPaisHTML():
     Salidas: HTML de la población por idioma.
     """
     infoPaises = crearPaisesLista(paises)
-    calcularHablantesPaisHTML(infoPaises)
+    contarPersonasPorIdiomaHTML(infoPaises)
     return menuHTML()
 #Menú HTML
 def menuHTML():
@@ -165,7 +169,7 @@ def menuHTML():
     """
     print ("\n**************************\n")
     print ("Laboratorio de listas")
-    print ("Menú Principal")
+    print ("Menú HTML")
     print ("\n**************************\n")
     print ("1. HTML de países por continente")
     print ("2. HTML de países por población mayor a menor")
@@ -198,12 +202,12 @@ def menuHTML():
             elif opcion == 8:
                 return opicioncalcularHablantesPaisHTML()
             elif opcion == 0:
-                print("Salida del programa")
+                print("¿Se te olvidó algo? ¡Tranquilo, te devolvemos al menú principal!\nSi no es así, presiona 0 para salir del programa.")
                 return menu()
             else:
                 print ("Opción inválida, digita una de las opciones")
-                return menu()
+                return menuHTML()
     except ValueError:
         print("Opción inválida, debe ingresar sólo los números de las opciones.")
-        return menu() 
+        return menuHTML()
 menu()
