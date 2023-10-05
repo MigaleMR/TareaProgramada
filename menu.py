@@ -17,42 +17,40 @@ sys.setrecursionlimit(5000)
 
 def opcionCrearEstructura():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Crea la estructura de datos de los países. 
+    Entradas: Archivo con los datos de los países.
+    Salidas: Estructura de datos de los países.
     """
     df = pd.read_excel("paises.xlsx", sheet_name=0)
     paises = df.to_numpy()
     crearPaisesLista(paises)
     return menu()
-
 def opcionListaPaisesXML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Crea el XML de los países.
+    Entradas: Estructura de datos de los países.
+    Salidas: XML de los países.
     """
     infoPaises = crearPaisesLista(paises) 
     listaPaises(infoPaises)
     return menu()
-
 def opcionHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Muestra el menú de HTML.
+    Entradas: Digito que se le solicita al usuario para indicar la prueba que desea realizar.
+    Salidas: Resultado según lo solicitado.
     """
     return menuHTML()
 def menu():
     """
-    Función: de manera repetitiva, muestra el menú al usuario. 
-    Entradas: dígito que se le solicita al usuario para indicar la prueba que desea realizar.
-    Salidas: resultado según lo solicitado
+    Función: Muestra el menú al usuario. 
+    Entradas: Dígito que se le solicita al usuario para indicar la prueba que desea realizar.
+    Salidas: Resultado según lo solicitado.
     """
     print ("\n**************************\n")
-    print ("Laboratorio de listas")
+    print ("Tarea programada 1")
     print ("Menú Principal")
-    print("Debe crear primero la lista con la opción 1, luego acceder a la opción 2.\ny luego acceder a la opción 3 para redirigirse a las sección de HTML.")
+    print("\n Debe crear primero la lista con la opción 1. \n Luego acceder a la opción 2.\n Luego acceder a la opción 3 para redirigirse a las sección de HTML.")
     print ("\n**************************\n")
     print ("1. Crear lista de países")
     print ("2. Crear XML de países")
@@ -82,9 +80,9 @@ def menu():
 #1. Listar países por continente
 def opcionHtmlContinente():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: LLama a la función htmlContinente.
+    Entradas: Información de los países.
+    Salidas: HTML de los países por continente.
     """
     infoPaises = crearPaisesLista(paises)
     htmlContinente(infoPaises)
@@ -92,9 +90,9 @@ def opcionHtmlContinente():
 #2. Listar países por población mayor a menor
 def opcionPoblacionMayorMenorHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: LLama a la función poblacionMayorMenor.
+    Entradas: Información de los países.
+    Salidas: HTML de los países por población mayor a menor.
     """
     infoPaises = crearPaisesLista(paises)
     poblacionMayorMenor(infoPaises)
@@ -102,9 +100,9 @@ def opcionPoblacionMayorMenorHTML():
 #3. Listar países por mayor o menor territorio
 def opcionTerritorioPaisesHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Llama a la función territorioPaisesHTML.
+    Entradas: Información de los países.
+    Salidas: HTML de los países por mayor o menor territorio.
     """
     infoPaises = crearPaisesLista(paises)
     territorioPaisesHTML(infoPaises)
@@ -112,9 +110,9 @@ def opcionTerritorioPaisesHTML():
 #4. Listar países con zonas azules
 def opcionmostrarZonasAzulesHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Llama a la función mostrarZonasAzulesHTML.
+    Entradas: Información de los países.
+    Salidas: HTML de los países con zonas azules.
     """
     infoPaises = crearPaisesLista(paises)
     mostrarZonasAzulesHTML(infoPaises)
@@ -122,9 +120,9 @@ def opcionmostrarZonasAzulesHTML():
 #5. Listar idiomas
 def opcioncontarIdiomasHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Llama a la función contarIdiomasHTML.
+    Entradas: Información de los países.
+    Salidas: HTML de los idiomas.
     """
     infoPaises = crearPaisesLista(paises)
     contarIdiomasHTML(infoPaises)
@@ -132,9 +130,9 @@ def opcioncontarIdiomasHTML():
 #6. Listar países por moneda.
 def opcionmostrarPaisesMonedaHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Llama a la función mostrarPaisesMonedaHTML.
+    Entradas: Información de los países.
+    Salidas: HTML de los países por moneda.
     """
     infoPaises = crearPaisesLista(paises)
     mostrarPaisesMonedaHTML(infoPaises)
@@ -142,28 +140,28 @@ def opcionmostrarPaisesMonedaHTML():
 #7. Códigos de un país.
 def opcioncogidosPaisHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Llama a la función cogidosPaisHTML.
+    Entradas: Información de los países.
+    Salidas: HTML de los códigos de un país.
     """
     infoPaises = crearPaisesLista(paises)
     cogidosPaisHTML(infoPaises)
 #8. Calcular población por idioma
-def opicioncalcularHablantesXPaisHTML():
+def opicioncalcularHablantesPaisHTML():
     """
-    Función: 
-    Entradas:
-    Salidas:
+    Función: Llama a la función calcularHablantesPaisHTML.
+    Entradas: Información de los países.
+    Salidas: HTML de la población por idioma.
     """
     infoPaises = crearPaisesLista(paises)
-    calcularHablantesXPaisHTML(infoPaises)
+    calcularHablantesPaisHTML(infoPaises)
     return menuHTML()
 #Menú HTML
 def menuHTML():
     """
-    Funcionamiento: de manera repetitiva, muestra el menú al usuario. 
-    Entradas: dígito que se le solicita al usuario para indicar la prueba que desea realizar.
-    Salidas:resultado según lo solicitado
+    Función: Muestra el menú al usuario. 
+    Entradas: Dígito que se le solicita al usuario para indicar la prueba que desea realizar.
+    Salidas: Resultado según lo solicitado.
     """
     print ("\n**************************\n")
     print ("Laboratorio de listas")
@@ -177,7 +175,7 @@ def menuHTML():
     print ("6. HTML de países por moneda")
     print ("7. HTML de códigos de un país")
     print ("8. HTML de población por idioma")
-    print ("0. Salir del sistema")
+    print ("0. Salir del submenú")
     print ("\n**************************\n")
     try:
         opcion = int(input("Escoja una opción: "))
@@ -198,10 +196,10 @@ def menuHTML():
             elif opcion == 7:
                 return opcioncogidosPaisHTML()
             elif opcion == 8:
-                return opicioncalcularHablantesXPaisHTML()
+                return opicioncalcularHablantesPaisHTML()
             elif opcion == 0:
-                print("Gracias por donar su sangre, ahora fuiste tú, luego espero poder ser yo.")
                 print("Salida del programa")
+                return menu()
             else:
                 print ("Opción inválida, digita una de las opciones")
                 return menu()
