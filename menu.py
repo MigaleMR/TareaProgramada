@@ -26,7 +26,7 @@ def opcionCrearEstructura():
     crearPaisesLista(paises)
     return menu()
 
-def opcionListaPaisesXlm():
+def opcionListaPaisesXML():
     """
     Función: 
     Entradas:
@@ -63,9 +63,11 @@ def menu():
         print ("\n**************************\n")
         if opcion>=0 or opcion<=5:
             if opcion == 1:
+                print("Lista de paises creada con éxito.")
                 return opcionCrearEstructura()
             elif opcion == 2:
-                return opcionListaPaisesXlm()
+                print("XML creado con éxito.")
+                return opcionListaPaisesXML()
             elif opcion == 3:
                 return opcionHTML() 
             elif opcion == 0:

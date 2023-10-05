@@ -118,6 +118,7 @@ def htmlContinente(infoPaises):
             fila.append(td)
     with open(f"Informacion{continenteElegido}.html", "w", encoding="utf-8") as file:
         file.write(str(html))
+    print("Archivo HTML creado con la información de los países del continente:",continenteElegido)
 
 #b. ¿Cuántos viven?
 def poblacionMayorMenor(infoPaises):
@@ -159,6 +160,7 @@ def poblacionMayorMenor(infoPaises):
             fila.append(td)
     with open("¿Cuántos viven?.html", "w", encoding="utf-8") as file:
         file.write(str(html))
+    print("Archivo HTML creado con la información de los países por población.")
 
 #c. De grandes a pequeños.
 def territorioPaisesHTML(infoPaises):
@@ -200,6 +202,7 @@ def territorioPaisesHTML(infoPaises):
             fila.append(td)
     with open("De grandes a pequeños.html", "w", encoding="utf-8") as file:
         file.write(str(html))
+    print("Archivo HTML creado con la información de los países por territorio.")
 
 #d. Zonas azules.
 def mostrarZonasAzulesHTML(infoPaises):
@@ -235,6 +238,7 @@ def mostrarZonasAzulesHTML(infoPaises):
             fila.append(td)
     with open("Zonas azules.html", "w", encoding="utf-8") as file:
         file.write(str(html))
+    print("Archivo HTML creado con la información de los países con zonas azules.")
 
 #e. Países con el mismo idioma.
 def contarIdiomasHTML(infoPaises):
@@ -300,6 +304,7 @@ def contarIdiomasHTML(infoPaises):
         fila.append(tdContinentes)
     with open("Países con el mismo idioma.html", "w", encoding="utf-8") as file:
         file.write(str(html))
+    print("Archivo HTML creado con la cantidad de países por idioma.")
 
 #f. Pago con la misma moneda.
 def mostrarPaisesMonedaHTML(infoPaises):
@@ -348,7 +353,7 @@ def mostrarPaisesMonedaHTML(infoPaises):
             fila.append(td)
     with open(f"paises{seleccionMoneda}.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-    print("Archivo HTML creado con los países que utilizan la moneda",seleccionMoneda,"y el contador de países.")
+    print("Archivo HTML creado con los países que utilizan la moneda:",seleccionMoneda)
 
 #g. Códigos de un determinado país.
 def cogidosPaisHTML(infoPaises):
@@ -384,7 +389,7 @@ def cogidosPaisHTML(infoPaises):
         listaDetalles.append(detalle)
     with open("Códigos de un determinado país.html", "w", encoding="utf-8") as file:
         file.write(str(html))
-    print("Archivo HTML creado con los detalles del país seleccionado.")
+    print("Archivo HTML creado con los códigos del país seleccionado.")
 
 #h. Hablantes por idioma
 def calcularHablantesXPaisHTML(infoPaises):
